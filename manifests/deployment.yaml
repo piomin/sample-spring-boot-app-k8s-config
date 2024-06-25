@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-spring-boot-app-k8s
+  labels:
+    backstage.io/kubernetes-id: sample-spring-boot-app-k8s
+    app: sample-spring-boot-app-k8s
+  annotations:
+    argocd/app-name: sample-spring-boot-app-k8s
+spec:
+  selector:
+    matchLabels:
+      app: sample-spring-boot-app-k8s
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+      labels:
+        app: sample-spring-boot-app-k8s
+    spec:
+      containers:
+        - name: sample-spring-boot-app-k8s
+          image: piomin/sample-spring-boot-app-k8s
+          ports:
+            - containerPort: 8080
+              name: http
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health/liveness
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health/readiness
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          resources:
+            limits:
+              memory: 1024Mi
