@@ -20,6 +20,7 @@ spec:
         prometheus.io/port: "8080"
       labels:
         app: sample-spring-boot-app-k8s
+        backstage.io/kubernetes-id: sample-spring-boot-app-k8s
     spec:
       containers:
         - name: sample-spring-boot-app-k8s
