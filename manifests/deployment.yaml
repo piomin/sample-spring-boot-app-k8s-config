@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: sample-spring-boot-app-k8s
-          image: piomin/sample-spring-boot-app-k8s
+          image: piomin/sample-spring-boot-app-k8s:latest
           ports:
             - containerPort: 8080
               name: http
