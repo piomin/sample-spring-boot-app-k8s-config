@@ -7,6 +7,7 @@ metadata:
     app: sample-spring-boot-app-k8s
   annotations:
     argocd/app-name: sample-spring-boot-app-k8s
+    backstage.io/kubernetes-id: sample-spring-boot-app-k8s
 spec:
   selector:
     matchLabels:
